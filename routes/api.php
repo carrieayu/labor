@@ -19,6 +19,7 @@ use App\Http\Controllers\TimeCardController;
 Route::get('/getAllUser', [UserController::class, 'index'])->name('userInfos.user');
 Route::get('/getUserById/{id}', [UserController::class, 'show']);
 Route::get('/getTimeCard/{id}', [TimeCardController::class, 'show']);
+Route::get('/getAllTc', [TimeCardController::Class,'index']);
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();

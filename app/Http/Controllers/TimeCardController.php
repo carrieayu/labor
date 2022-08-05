@@ -15,7 +15,7 @@ class TimeCardController extends Controller
      */
     public function index()
     {
-        //
+        return t_timecard::all();
     }
 
     /**

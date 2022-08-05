@@ -21,6 +21,7 @@ Route::get('/getAllUser', [UserController::class, 'index'])->name('userInfos.use
 Route::get('/getUserById/{id}', [UserController::class, 'show']);
 Route::get('/getTimeCard/{id}', [TimeCardController::class, 'show']);
 Route::get('/getIC', [IcController::class, 'index']);
+Route::get('/getAllTC', [TimeCardController::class, 'index']);
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();

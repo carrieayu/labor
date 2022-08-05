@@ -36,7 +36,7 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        //
+        return t_user::find($id);
     }
 
     /**

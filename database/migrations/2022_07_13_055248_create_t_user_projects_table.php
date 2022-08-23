@@ -13,7 +13,7 @@ class CreateTUserProjectsTable extends Migration
      */
     public function up()
     {
-        Schema::create('t_user_projects', function (Blueprint $table) {
+        Schema::create('r_user_projects', function (Blueprint $table) {
             $table->id();
             $table->string('project_id');
             $table->string('role');
@@ -33,6 +33,6 @@ class CreateTUserProjectsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('t_user_projects');
+        Schema::dropIfExists('r_user_projects');
     }
 }

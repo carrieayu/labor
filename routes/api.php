@@ -5,7 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\TimeCardController;
 use App\Http\Controllers\IcController;
-
+use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\GroupController;
 /*
@@ -20,14 +20,24 @@ use App\Http\Controllers\GroupController;
 */
 
 Route::get('/getAllUser', [UserController::class, 'index'])->name('userInfos.user');
+Route::get('/getAllTc', [TimeCardController::Class, 'index']);
+Route::get('/getIC', [IcController::class, 'index']);
+Route::get('/getAllCompany', [CompanyController::class, 'index']);
+Route::get('/getAllGroups', [GroupController::class, 'index']);
+Route::get('/getAllEmployee', [EmployeeController::class, 'index']);
+
+//with id
 Route::get('/getUserById/{id}', [UserController::class, 'show']);
 Route::get('/getTimeCard/{id}', [TimeCardController::class, 'show']);
-Route::get('/getAllTc', [TimeCardController::Class,'index']);
-Route::get('/getIC', [IcController::class, 'index']);
-Route::get('/getAllTC', [TimeCardController::class, 'index']);
-Route::get('/getAllTc', [TimeCardController::Class,'index']);
-Route::get('/getAllCompany', [CompanyController::class, 'index']);
-Route::get('getAllGroups', [GroupController::class, 'index']);
+Route::get('/getIcByEmp/{id}', [IcController::class, 'show']);
+ROute::post('/getTcByEmp/{id}', [TimeCardController::class, 'tcById']);
+
+//update
+Route::post('/updateIc/{id}', [IcController::class, 'update']);
+Route::post('/updateCompany/{id}', [CompanyController::class, 'update']);
+Route::post('/updateUser/{id}', [UserController::class, 'update']);
+Route::post('/updateGroup/{id}', [GroupController::class, 'update']);
+Route::post('/updateTimeCard/{id}', [TimeCardController::class, 'update']);
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();

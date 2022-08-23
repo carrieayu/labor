@@ -13,7 +13,7 @@ class CreateTUserGroupsTable extends Migration
      */
     public function up()
     {
-        Schema::create('t_user_groups', function (Blueprint $table) {
+        Schema::create('r_user_groups', function (Blueprint $table) {
             $table->id();
             $table->string('group_id');
             $table->string('role');
@@ -33,6 +33,6 @@ class CreateTUserGroupsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('t_user_groups');
+        Schema::dropIfExists('r_user_groups');
     }
 }

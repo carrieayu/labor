@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\t_user;
+use Illuminate\Support\Facades\Validator;
+
 
 class UserController extends Controller
 {
@@ -48,7 +50,51 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $userInfo = t_user::find($id);
+
+        if($userInfo){
+            $data = $request->all();
+            $validator = Validator::make($data, [
+                'name'          => 'string',
+                'mail'          => 'string',
+                'employee_id'   => 'integer',
+                'password'      => 'string',
+                'valid_until_for_pw'    => 'date',
+                'note'          => 'string',
+                'role'          => 'string'
+            ]);
+
+            if($validator->fails()){
+                return response(['error' => $validator->errors(), 'Validation Error']);
+            }
+
+            $userInfo->update([
+                'name'          => $request->name,
+                'mail'          => $request->mail,
+                'employee_id'   => $request->employee_id,
+                'password'      => $request->password,
+                'valid_until_for_pw'    => $request->valid_until_for_pw,
+                'note'          => $request->note,
+                'role'          => $request->role
+            ]);
+
+            $resMessage = "Updating User Success";
+
+            return response()-> json([
+                'success'   => true,
+                'message'   => $resMessage,
+                'data'      => $userInfo
+            ],200);
+
+
+        }else {
+            $resMessage = "Updating user failed";
+
+            return response()->json([
+                'success'   => false,
+                'message'   => $resMessage
+            ],100);
+        }
     }
 
     /**

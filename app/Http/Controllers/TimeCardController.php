@@ -39,15 +39,22 @@ class TimeCardController extends Controller
      */
     public function show($id)
     {
+        $result = DB::select("SELECT *, t_timecards.id as t_timecards_id, t_employees.id as t_employee_id, t_timecards.note as t_timecards_note FROM t_timecards INNER JOIN t_employees ON t_timecards.employee_id = t_employees.id WHERE t_employees.id = :id", ['id' => $id]);
+        return $result;
+        // $timecard = DB::table('t_timecards')
+        //     ->join('t_employees','t_timecards.employee_id', '=', 't_employees.id')
+        //     ->select('*')
+        //     ->select('t_employees.id AS t_employee_id')
+        //     ->where('t_employees.id', '=', $id)
+        //     ->get();
 
-        $timecard = DB::table('t_timecards')
-            ->join('t_employees','t_timecards.employee_id', '=', 't_employees.id')
-            ->where('t_employees.id', '=', $id)
-            ->get();
-
-        return $timecard;
+        // return $timecard;
 
 
+    }
+
+    public function retrieve($id){
+        return t_timecard::find($id);
     }
 
     public function tcById(Request $request, $id){
@@ -86,12 +93,11 @@ class TimeCardController extends Controller
         if($tcInfo){
             $data = $request->all();
             $validator = Validator::make($data, [
-                'employee_id'       => 'integer',
                 'serial_no'         => 'string',
                 'start_date'        => 'date',
                 'end_date'          => 'date',
                 'start_time'        => 'date_format:H:i:s',
-                'end_time'          => 'date_format:H:i:s|after:start_time',
+                'end_time'          => 'date_format:H:i:s',
                 'note'              => 'string',
             ]);
 
@@ -100,7 +106,6 @@ class TimeCardController extends Controller
             }
 
             $tcInfo->update([
-                'employee_id'       => $request->employee_id,
                 'serial_no'         => $request->serial_no,
                 'start_date'        => $request->start_date,
                 'end_date'          => $request->end_date,

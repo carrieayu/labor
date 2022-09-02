@@ -38,6 +38,7 @@ Route::post('/updateCompany/{id}', [CompanyController::class, 'update']);
 Route::post('/updateUser/{id}', [UserController::class, 'update']);
 Route::post('/updateGroup/{id}', [GroupController::class, 'update']);
 Route::post('/updateTimeCard/{id}', [TimeCardController::class, 'update']);
+Route::post('/updateEmployee/{id}', [EmployeeController::class, 'update']);
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();

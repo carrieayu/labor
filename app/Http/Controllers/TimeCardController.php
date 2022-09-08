@@ -28,7 +28,39 @@ class TimeCardController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = $request->all();
+        $validator = Validator::make($data, [
+            'employee_id'       => 'integer',
+            'serial_no'         => 'string',
+            'start_date'        => 'date',
+            'end_date'          => 'date',
+            'start_time'        => 'date_format:H:i:s',
+            'end_time'          => 'date_format:H:i:s',
+            'note'              => 'string',
+        ]);
+
+        if($validator->fails()){
+            return response(['error' => $validator->errors(), 'Validation Error']);
+        }
+
+        $timeCardInfo = t_timecard::create([
+            'employee_id'       => $request->employee_id,
+            'serial_no'         => $request->serial_no,
+            'start_date'        => $request->start_date,
+            'end_date'          => $request->end_date,
+            'start_time'        => $request->start_time,
+            'end_time'          => $request->end_time,
+            'note'              => $request->note,
+        ]);
+
+        $responseMessage = "Time Card Created Successfully";
+
+
+        return response()->json([
+            'success'   => true,
+            'message'   => $responseMessage,
+            'data'      => $timeCardInfo
+        ],200);
     }
 
     /**

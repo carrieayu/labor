@@ -45,7 +45,7 @@ class CreateTEmployeesTable extends Migration
             $table->string('created_user')->default('SYSTEM');
             $table->timestamp('created_datetime')->useCurrent();
             $table->string('modified_user');
-            $table->timestamp('modified_datetime');
+            $table->timestamp('modified_datetime')->useCurrent();
             $table->integer('del_f')->default(0);
             $table->timestamps();
         });

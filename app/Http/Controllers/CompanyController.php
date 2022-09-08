@@ -27,7 +27,38 @@ class CompanyController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = $request->all();
+        $validator = Validator::make($data, [
+            'name'              => 'string',
+            'service_person'    => 'string',
+            'phone_no1'         => 'string',
+            'phone_no2'         => 'string',
+            'postal_code'       => 'string',
+            'address'           => 'string',
+            'note'              => 'string',
+        ]);
+
+        if($validator->fails()) {
+            return response(['error' => $validator->errors(), 'Validation Error']);
+        }
+
+        $companyInfo = t_company::create([
+            'name'              => $request->name,
+            'service_person'    => $request->service_person,
+            'phone_no1'         => $request->phone_no1,
+            'phone_no2'         => $request->phone_no2,
+            'postal_code'       => $request->postal_code,
+            'address'           => $request->address,
+            'note'              => $request->note,
+        ]);
+
+        $responseMessage = "Company Info Created Successfully";
+
+        return response()->json([
+            'success' => true,
+            'message' => $responseMessage,
+            'data'    => $companyInfo
+        ], 200);
     }
 
     /**

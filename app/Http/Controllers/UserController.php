@@ -27,7 +27,38 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = $request->all();
+        $validator = Validator::make($data, [
+            'name'          => 'string',
+            'mail'          => 'string',
+            'employee_id'   => 'integer',
+            'password'      => 'required|string|confirmed',
+            'valid_until_for_pw'    => 'date',
+            'note'          => 'string',
+            'role'          => 'string'
+        ]);
+
+        if($validator->fails()){
+            return response(['error' => $validator->errors(), 'Validation Error']);
+        }
+
+        $userInfo = t_user::create([
+            'name'          => $request->name,
+            'mail'          => $request->mail,
+            'employee_id'   => $request->employee_id,
+            'password'      => $request->password,
+            'valid_until_for_pw'    => $request->valid_until_for_pw,
+            'note'          => $request->note,
+            'role'          => $request->role
+        ]);
+
+        $responseMessage = "User Registration Successful";
+
+        return response()->json([
+            'success'   => true,
+            'message'   => $responseMessage,
+            'data'      => $userInfo
+        ],200);
     }
 
     /**
@@ -58,7 +89,7 @@ class UserController extends Controller
                 'name'          => 'string',
                 'mail'          => 'string',
                 'employee_id'   => 'integer',
-                'password'      => 'string',
+                'password'      => 'required|string|confirmed',
                 'valid_until_for_pw'    => 'date',
                 'note'          => 'string',
                 'role'          => 'string'

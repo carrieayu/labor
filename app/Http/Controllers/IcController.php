@@ -33,7 +33,48 @@ class IcController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = $request->all();
+        $validator = Validator::make($data, [
+            'state'         =>  'string',
+            'employee_id'   =>  'integer',
+            'valid_until_for_ic'    => 'date',
+            'date_allocated'    => 'date',
+            'date_released'     => 'date',
+            'serial_no'         => 'string',
+            'input_class'       => 'string',
+            'terminal_no'       => 'string',
+            'other_class'       => 'string',
+            'logic_address1'    => 'string',
+            'logic_address2'    => 'string',
+            'note'              => 'string',
+        ]);
+
+        if($validator->fails()){
+            return response(['error' => $validator->errors(), 'Validation Error']);
+        }
+
+        $icInfo = t_ic::create([
+            'state'         => $request->state,
+            'employee_id'   => $request->employee_id,
+            'valid_until_for_ic'    => $request->valid_until_for_ic,
+            'date_allocated'        => $request->date_allocated,
+            'date_released'         => $request->date_released,
+            'serial_no'             => $request->serial_no,
+            'input_class'           => $request->input_class,
+            'terminal_no'           => $request->terminal_no,
+            'other_class'           => $request->other_class,
+            'logic_address1'        => $request->logic_address1,
+            'logic_address2'        => $request->logic_address2,
+            'note'                  => $request->note,
+        ]);
+
+        $responseMessage = "IC Created Successfully";
+
+        return response()->json([
+            'success'   => true,
+            'message'   => $responseMessage,
+            'data'      => $icInfo
+        ], 200);
     }
 
     /**

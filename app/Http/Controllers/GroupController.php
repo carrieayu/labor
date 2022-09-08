@@ -27,7 +27,30 @@ class GroupController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = $request->all();
+        $validator = Validator::make($data, [
+            'name'          => 'string',
+            'color_code'    => 'string',
+            'note'          => 'string',
+        ]);
+
+        if($validator->fails()) {
+            return response(['error' => $validator->errors(), 'Validation Error']);
+        }
+
+        $groupInfo = t_group::create([
+            'name'          => $request->name,
+            'color_code'    => $request->color_code,
+            'note'          => $request->note,
+        ]);
+
+        $responseMessage = "Group Created Successfully";
+
+        return response()->json([
+            'success'   => true,
+            'message'   => $responseMessage,
+            'data'      => $groupInfo
+        ],200);
     }
 
     /**

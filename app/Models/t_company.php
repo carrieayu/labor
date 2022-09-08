@@ -12,7 +12,7 @@ class t_company extends Model
 
     protected $fillable = [
         'name',
-        'sevice_id',
+        'service_person',
         'phone_no1',
         'phone_no2',
         'postal_code',
